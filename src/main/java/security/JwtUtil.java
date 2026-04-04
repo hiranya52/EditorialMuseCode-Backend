@@ -23,6 +23,16 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String extractEmail(String token) {
+        return getClaims(token).getSubject();
+    }
 
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
 }
