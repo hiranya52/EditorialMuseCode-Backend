@@ -20,6 +20,16 @@ public class UserController {
         return "Public API working";
     }
 
+    @PostMapping("/register")
+    public UserDTO registerUser(@RequestBody UserDTO request) {
+
+        return userService.registerLocalUser(
+                request.getFullName(),
+                request.getEmail(),
+                "1234" // temporary if no password field yet
+        );
+    }
+
     // 🔐 Save categories (PERSONALIZE FEED)
     @PostMapping("/categories")
     public UserDTO saveCategories(
