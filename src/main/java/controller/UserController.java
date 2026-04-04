@@ -30,5 +30,11 @@ public class UserController {
         return userService.saveUserCategories(email, request.getCategoryIds());
     }
 
+    // 🔐 Get profile
+    @GetMapping("/profile")
+    public UserDTO getProfile(Authentication authentication) {
+        String email = authentication.getName();
+        return userService.getUserProfile(email);
+    }
 
 }
