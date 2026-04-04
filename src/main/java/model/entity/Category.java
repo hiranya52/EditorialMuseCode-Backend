@@ -20,8 +20,4 @@ public class Category {
     @Column(unique = true, nullable = false)
     private String name;
 
-    // Optional: reverse mapping (User ↔ Category)
-    @ManyToMany(mappedBy = "categories")
-    private Set<User> users;
-
 }
