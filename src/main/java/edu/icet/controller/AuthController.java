@@ -18,6 +18,11 @@ public class AuthController {
         return "MuseCode Loaded....";
     }
 
+    @PostMapping("/register")
+    public String register(@RequestBody AuthRequest request) {
+        return service.register(request.getUsername(), request.getPassword());
+    }
+
     @PostMapping("/login")
     public String login(@RequestBody AuthRequest request) {
         return service.login(request.getUsername(), request.getPassword());
