@@ -15,30 +15,28 @@ public class JwtUtil {
     private final Key key;
     private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
 
-    // ✅ use application.properties secret
     public JwtUtil(@Value("${jwt.secret}") String secret) {
-
-        // ensure BASE64 decoding (IMPORTANT)
         byte[] keyBytes = Base64.getDecoder().decode(secret);
-
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String username) {
+    // ✅ Generate token using EMAIL
+    public String generateToken(String email, Long userId) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return getClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token, String username) {
-        return username.equals(extractUsername(token)) && !isExpired(token);
+    public boolean validateToken(String token, String email) {
+        return email.equals(extractEmail(token)) && !isExpired(token);
     }
 
     private boolean isExpired(String token) {
