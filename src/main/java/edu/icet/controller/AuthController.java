@@ -1,6 +1,8 @@
 package edu.icet.controller;
 
 
+import edu.icet.model.dto.LoginRequest;
+import edu.icet.model.dto.RegisterRequest;
 import edu.icet.model.entity.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

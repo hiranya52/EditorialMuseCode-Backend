@@ -34,17 +34,38 @@ public class AuthService {
     }
 
     // REGISTER
-    public String register(String username, String password) {
+//    public String register(String username, String password, String requestPassword) {
+//
+//        if (userRepository.findByUsername(username).isPresent()) {
+//            return "User already exists";
+//        }
+//
+//        User user = new User();
+//        user.setUsername(username);
+//
+//        // 🔐 IMPORTANT: encode password
+//        user.setPassword(passwordEncoder.encode(password));
+//
+//        userRepository.save(user);
+//
+//        return "User registered successfully";
+//    }
 
-        if (userRepository.findByUsername(username).isPresent()) {
+
+    /// ///////////////////////
+
+    public String register(String fullName, String email, String password) {
+
+        if (userRepository.findByEmail(email).isPresent()) {
             return "User already exists";
         }
 
         User user = new User();
-        user.setUsername(username);
+        user.setFullName(fullName);
+        user.setEmail(email);
 
-        // 🔐 IMPORTANT: encode password
-        user.setPassword(passwordEncoder.encode(password));
+        // 🔐 Encode password
+        user.setPasswordHash(passwordEncoder.encode(password));
 
         userRepository.save(user);
 
