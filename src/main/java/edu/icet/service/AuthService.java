@@ -24,14 +24,14 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String login(String username, String password) {
-
-        authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-        );
-
-        return jwtUtil.generateToken(username);
-    }
+//    public String login(String username, String password) {
+//
+//        authManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(username, password)
+//        );
+//
+//        return jwtUtil.generateToken(username);
+//    }
 
     // REGISTER
 //    public String register(String username, String password, String requestPassword) {
@@ -52,7 +52,18 @@ public class AuthService {
 //    }
 
 
-    /// ///////////////////////
+    public String login(String email, String password) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            throw new RuntimeException("Invalid password");
+        }
+
+        // 🔐 Generate JWT
+        return jwtService.generateToken(user);
+    }
 
     public String register(String fullName, String email, String password) {
 
