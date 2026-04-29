@@ -1,6 +1,6 @@
 package edu.icet.service;
 
-
+import edu.icet.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository repo;
 
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        edu.icet.model.entity.User user = repo.findByUsername(username)
+        User user = repo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPasswordHash())
+                .authorities("USER")
+                .build();
     }
 }

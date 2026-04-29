@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import edu.icet.security.JwtUtil;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -51,6 +53,21 @@ public class AuthService {
 //        return "User registered successfully";
 //    }
 
+    public String register(String fullName, String email, String password) {
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+
+        User user = new User();
+        user.setFullName(fullName);
+        user.setEmail(email);
+        user.setPasswordHash(passwordEncoder.encode(password));
+
+        userRepository.save(user);
+
+        return "User registered successfully";
+    }
 
     public String login(String email, String password) {
 
@@ -61,26 +78,9 @@ public class AuthService {
             throw new RuntimeException("Invalid password");
         }
 
-        // 🔐 Generate JWT
-        return jwtService.generateToken(user);
-    }
-
-    public String register(String fullName, String email, String password) {
-
-        if (userRepository.findByEmail(email).isPresent()) {
-            return "User already exists";
-        }
-
-        User user = new User();
-        user.setFullName(fullName);
-        user.setEmail(email);
-
-        // 🔐 Encode password
-        user.setPasswordHash(passwordEncoder.encode(password));
-
-        userRepository.save(user);
-
-        return "User registered successfully";
+        // ✅ Generate JWT
+        return jwtUtil.generateToken(user.getEmail(), user.getId());
     }
 
 }
+
