@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
 @Getter
 @Setter
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -22,17 +22,15 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // 🔐 Stored as hash (BCrypt)
-    @Column(name = "password_hash")
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // ✅ Automatically set timestamps
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
