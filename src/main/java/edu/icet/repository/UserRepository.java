@@ -6,9 +6,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<edu.icet.model.entity.User> findByUsername(String username);
-
-
-//    Optional<Object> findByEmail(String email);
     Optional<User> findByEmail(String email);
 }
