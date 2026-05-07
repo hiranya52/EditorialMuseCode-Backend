@@ -43,11 +43,26 @@ public class AuthController {
         );
     }
 
+//    @PostMapping("/login")
+//    public String login(@RequestBody LoginRequest request) {
+//        return service.login(
+//                request.getEmail(),
+//                request.getPassword()
+//        );
+//    }
+
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
-        return service.login(
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+
+        String result = service.login(
                 request.getEmail(),
                 request.getPassword()
+        );
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", result
+                )
         );
     }
 
