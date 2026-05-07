@@ -4,8 +4,11 @@ package edu.icet.controller;
 import edu.icet.model.dto.LoginRequest;
 import edu.icet.model.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import edu.icet.service.AuthService;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -15,12 +18,28 @@ public class AuthController {
     @Autowired
     private AuthService service;
 
+//    @PostMapping("/register")
+//    public String register(@RequestBody RegisterRequest request) {
+//        return service.register(
+//                request.getFullName(),
+//                request.getEmail(),
+//                request.getPassword()
+//        );
+//    }
+
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
-        return service.register(
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+
+        String message = service.register(
                 request.getFullName(),
                 request.getEmail(),
                 request.getPassword()
+        );
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", message
+                )
         );
     }
 
