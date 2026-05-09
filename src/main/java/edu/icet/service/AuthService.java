@@ -26,33 +26,6 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    public String login(String username, String password) {
-//
-//        authManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(username, password)
-//        );
-//
-//        return jwtUtil.generateToken(username);
-//    }
-
-    // REGISTER
-//    public String register(String username, String password, String requestPassword) {
-//
-//        if (userRepository.findByUsername(username).isPresent()) {
-//            return "User already exists";
-//        }
-//
-//        User user = new User();
-//        user.setUsername(username);
-//
-//        // 🔐 IMPORTANT: encode password
-//        user.setPassword(passwordEncoder.encode(password));
-//
-//        userRepository.save(user);
-//
-//        return "User registered successfully";
-//    }
-
     public String register(String fullName, String email, String password) {
 
         if (userRepository.findByEmail(email).isPresent()) {
@@ -69,16 +42,34 @@ public class AuthService {
         return "User registered successfully";
     }
 
+//    public String login(String email, String password) {
+//
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+//            throw new RuntimeException("Invalid password");
+//        }
+//
+//        // ✅ Generate JWT
+//        return jwtUtil.generateToken(user.getEmail(), user.getId());
+//    }
+
     public String login(String email, String password) {
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        Optional<User> optionalUser = userRepository.findByEmail(email);
 
-        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
-            throw new RuntimeException("Invalid password");
+        if (optionalUser.isEmpty()) {
+            return "User not found";
         }
 
-        // ✅ Generate JWT
+        User user = optionalUser.get();
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            return "Invalid password";
+        }
+
+        // Generate JWT
         return jwtUtil.generateToken(user.getEmail(), user.getId());
     }
 

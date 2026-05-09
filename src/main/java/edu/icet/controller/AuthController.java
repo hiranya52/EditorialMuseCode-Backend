@@ -18,15 +18,6 @@ public class AuthController {
     @Autowired
     private AuthService service;
 
-//    @PostMapping("/register")
-//    public String register(@RequestBody RegisterRequest request) {
-//        return service.register(
-//                request.getFullName(),
-//                request.getEmail(),
-//                request.getPassword()
-//        );
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
@@ -42,15 +33,7 @@ public class AuthController {
                 )
         );
     }
-
-//    @PostMapping("/login")
-//    public String login(@RequestBody LoginRequest request) {
-//        return service.login(
-//                request.getEmail(),
-//                request.getPassword()
-//        );
-//    }
-
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
