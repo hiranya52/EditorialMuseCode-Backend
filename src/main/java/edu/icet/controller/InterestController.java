@@ -6,6 +6,8 @@ import edu.icet.repository.UserRepository;
 import edu.icet.security.JwtUtil;
 import edu.icet.service.InterestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,13 +20,15 @@ public class InterestController {
     private final UserRepository userRepository;
 
     @PostMapping
-    public String saveInterests(@RequestHeader("Authorization") String token, @RequestBody InterestRequestDTO dto) {
-        String email = jwtUtil.extractEmail(token.substring(7));
+    public String saveInterests(@RequestBody InterestRequestDTO dto,
+                                @AuthenticationPrincipal UserDetails user) {
 
-        User user = userRepository.findByEmail(email)
+        String email = user.getUsername();
+
+        User u = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        interestService.saveUserInterests(user.getId(), dto);
+        interestService.saveUserInterests(u.getId(), dto);
 
         return "Interests Saved Successfully";
     }
