@@ -15,10 +15,22 @@ public class FollowController {
 
     private final FollowService followService;
 
-    @PostMapping
-    public String followUser(@RequestBody FollowRequestDTO dto) {
 
-        followService.followUser(1L, dto.getFollowingUserId());
+    @PostMapping
+    public String followUser(
+            @RequestHeader("Authorization") String token,
+            @RequestBody FollowRequestDTO dto
+    ) {
+
+        String email = jwtUtil.extractEmail(token.substring(7));
+
+        User follower = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        followService.followUser(
+                follower.getId(),
+                dto.getFollowingUserId()
+        );
 
         return "Followed Successfully";
     }
