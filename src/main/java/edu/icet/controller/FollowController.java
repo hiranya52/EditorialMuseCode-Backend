@@ -15,6 +15,12 @@ public class FollowController {
 
     private final FollowService followService;
 
+    @PostMapping
+    public String followUser(@RequestBody FollowRequestDTO dto) {
 
+        followService.followUser(1L, dto.getFollowingUserId());
+
+        return "Followed Successfully";
+    }
 
 }
