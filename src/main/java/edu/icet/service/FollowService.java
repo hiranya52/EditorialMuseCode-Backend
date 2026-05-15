@@ -17,10 +17,10 @@ public class FollowService {
     public void followUser(Long followerId, Long followingId) {
 
         User follower = userRepository.findById(followerId)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Follower not found"));
 
         User following = userRepository.findById(followingId)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Following user not found"));
 
         Follower follow = Follower.builder()
                 .follower(follower)

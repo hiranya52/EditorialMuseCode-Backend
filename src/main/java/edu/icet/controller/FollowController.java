@@ -1,12 +1,12 @@
 package edu.icet.controller;
 
 import edu.icet.model.dto.FollowRequestDTO;
+import edu.icet.model.entity.User;
+import edu.icet.repository.UserRepository;
+import edu.icet.security.JwtUtil;
 import edu.icet.service.FollowService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/follow")
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class FollowController {
 
     private final FollowService followService;
+    private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
 
     @PostMapping
