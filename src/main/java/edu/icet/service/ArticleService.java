@@ -3,6 +3,7 @@ package edu.icet.service;
 import edu.icet.model.dto.ArticleRequestDTO;
 import edu.icet.model.entity.Article;
 import edu.icet.model.entity.User;
+import edu.icet.repository.ArticleRepository;
 import edu.icet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
