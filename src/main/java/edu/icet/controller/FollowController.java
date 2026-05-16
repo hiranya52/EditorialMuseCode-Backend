@@ -17,7 +17,6 @@ public class FollowController {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
-
     @PostMapping
     public String followUser(
             @RequestHeader("Authorization") String token,

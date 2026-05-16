@@ -19,20 +19,6 @@ public class InterestController {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
-//    @PostMapping
-//    public String saveInterests(@RequestBody InterestRequestDTO dto,
-//                                @AuthenticationPrincipal UserDetails user) {
-//
-//        String email = user.getUsername();
-//
-//        User u = userRepository.findByEmail(email)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        interestService.saveUserInterests(u.getId(), dto);
-//
-//        return "Interests Saved Successfully";
-//    }
-
     @PostMapping
     public String saveInterests(@RequestBody InterestRequestDTO dto,
                                 @AuthenticationPrincipal UserDetails user) {
