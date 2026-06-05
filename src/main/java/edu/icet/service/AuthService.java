@@ -42,6 +42,7 @@ public class AuthService {
         user.setPasswordHash(passwordEncoder.encode(password));
 
         userRepository.save(user);
+        profileService.createProfile(user);
 
         return "User registered successfully";
     }
