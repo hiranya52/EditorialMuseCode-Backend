@@ -4,7 +4,6 @@ import edu.icet.model.entity.User;
 import edu.icet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import edu.icet.security.JwtUtil;
@@ -24,11 +23,10 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private ProfileService profileService;
 
     @Autowired
-    private ProfileService profileService;
+    private PasswordEncoder passwordEncoder;
 
     public String register(String fullName, String email, String password) {
 
