@@ -1,5 +1,6 @@
 package edu.icet.service;
 
+import edu.icet.model.dto.UpdateProfileRequest;
 import edu.icet.model.entity.Profile;
 import edu.icet.model.entity.User;
 import edu.icet.repository.ProfileRepository;
@@ -36,7 +37,20 @@ public class ProfileService {
     }
 
     // UPDATE PROFILE
-    public Profile update(Profile profile) {
+    public Profile updateProfile(
+            Long userId,
+            UpdateProfileRequest request
+    ) {
+
+        Profile profile = profileRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("Profile not found"));
+
+        profile.setDisplayName(request.getDisplayName());
+        profile.setUsername(request.getUsername());
+        profile.setBio(request.getBio());
+        profile.setProfileImageUrl(request.getProfileImageUrl());
+
         return profileRepository.save(profile);
     }
 
