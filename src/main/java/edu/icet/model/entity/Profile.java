@@ -35,9 +35,6 @@ public class Profile {
     @Column(name = "profile_image_url", columnDefinition = "TEXT")
     private String profileImageUrl;
 
-    @Column(name = "cover_image_url", columnDefinition = "TEXT")
-    private String coverImageUrl;
-
     @Column(name = "followers_count")
     private Integer followersCount = 0;
 

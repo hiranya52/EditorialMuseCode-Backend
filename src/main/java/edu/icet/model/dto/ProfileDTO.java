@@ -21,8 +21,6 @@ public class ProfileDTO {
 
     private String profileImageUrl;
 
-    private String coverImageUrl;
-
     private Integer followersCount;
 
     private Integer followingCount;
