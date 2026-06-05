@@ -26,6 +26,10 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    @Autowired
+    private ProfileService profileService;
+
     public String register(String fullName, String email, String password) {
 
         if (userRepository.findByEmail(email).isPresent()) {
