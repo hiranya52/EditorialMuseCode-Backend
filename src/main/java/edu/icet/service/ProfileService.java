@@ -33,4 +33,9 @@ public class ProfileService {
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
     }
 
+    // UPDATE PROFILE
+    public Profile update(Profile profile) {
+        return profileRepository.save(profile);
+    }
+
 }
