@@ -3,6 +3,7 @@ package edu.icet.controller;
 
 import edu.icet.model.dto.LoginRequest;
 import edu.icet.model.dto.RegisterRequest;
+import edu.icet.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ public class AuthController {
 
     @Autowired
     private AuthService service;
+
+    @Autowired
+    private ProfileService profileService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
