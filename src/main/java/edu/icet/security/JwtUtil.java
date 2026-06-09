@@ -13,14 +13,15 @@ import java.util.Date;
 public class JwtUtil {
 
     private final Key key;
-    private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
+//    private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
+      private final long EXPIRATION = 1000L * 60 * 60 * 24 * 7; // 7 days
 
     public JwtUtil(@Value("${jwt.secret}") String secret) {
         byte[] keyBytes = Base64.getDecoder().decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // ✅ Generate token using EMAIL
+    // Generate token using EMAIL
     public String generateToken(String email, Long userId) {
         return Jwts.builder()
                 .setSubject(email)

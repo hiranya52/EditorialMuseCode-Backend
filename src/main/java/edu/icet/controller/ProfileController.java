@@ -18,10 +18,8 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    // =========================================
-    // GET PROFILE BY USER ID
-    // =========================================
 
+    // GET PROFILE BY USER ID
     @GetMapping("/{userId}")
     public ResponseEntity<?> getProfile(
             @PathVariable Long userId
@@ -44,10 +42,8 @@ public class ProfileController {
         return ResponseEntity.ok(dto);
     }
 
-    // =========================================
-    // UPDATE PROFILE
-    // =========================================
 
+    // UPDATE PROFILE
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateProfile(
             @PathVariable Long userId,
