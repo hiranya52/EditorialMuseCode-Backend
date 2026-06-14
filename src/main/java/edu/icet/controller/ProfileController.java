@@ -21,23 +21,11 @@ public class ProfileController {
 
     // GET PROFILE BY USER ID
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getProfile(
+    public ResponseEntity<ProfileDTO> getProfile(
             @PathVariable Long userId
     ) {
 
-        Profile profile = profileService.getByUserId(userId);
-
-        ProfileDTO dto = ProfileDTO.builder()
-                .id(profile.getId())
-                .userId(profile.getUser().getId())
-                .displayName(profile.getDisplayName())
-                .username(profile.getUsername())
-                .bio(profile.getBio())
-                .profileImageUrl(profile.getProfileImageUrl())
-                .followersCount(profile.getFollowersCount())
-                .followingCount(profile.getFollowingCount())
-                .articlesCount(profile.getArticlesCount())
-                .build();
+        ProfileDTO dto = profileService.getByUserId(userId);
 
         return ResponseEntity.ok(dto);
     }
